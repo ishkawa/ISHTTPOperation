@@ -26,8 +26,8 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 - (void)testCompletionHandlerIsCalledOnMainThread
 {
     NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *reqeust = [NSURLRequest requestWithURL:URL];
-    [ISHTTPOperation sendRequest:reqeust handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
         STAssertTrue([NSThread isMainThread], nil);
         self.isFinished = YES;
     }];
@@ -36,22 +36,38 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 - (void)testFailureHandlerIsCalledOnMainThread
 {
     NSURL *URL = [NSURL URLWithString:@"http://fsdafkjlfasda.org"];
-    NSURLRequest *reqeust = [NSURLRequest requestWithURL:URL];
-    [ISHTTPOperation sendRequest:reqeust handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
         STAssertNotNil(error, nil);
         STAssertTrue([NSThread isMainThread], nil);
         self.isFinished = YES;
     }];
 }
 
+- (void)testDeallocOnCancel
+{
+    __weak ISHTTPOperation *woperation;
+    
+    @autoreleasepool {
+        NSURL *URL = [NSURL URLWithString:ISTestURL];
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+        ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
+        woperation = operation;
+        [operation cancel];
+    }
+    
+    STAssertNil(woperation, nil);
+    self.isFinished = YES;
+}
+
 - (void)testQueueing
 {
     NSUInteger limit = 10;
     NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *reqeust = [NSURLRequest requestWithURL:URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
     for (NSInteger i=0; i<limit; i++) {
-        [ISHTTPOperation sendRequest:reqeust handler:nil];
+        [ISHTTPOperation sendRequest:request handler:nil];
     }
     
     NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
@@ -62,8 +78,8 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 - (void)testCancel
 {
     NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *reqeust = [NSURLRequest requestWithURL:URL];
-    [ISHTTPOperation sendRequest:reqeust handler:nil];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    [ISHTTPOperation sendRequest:request handler:nil];
     
     NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
     [queue cancelAllOperations];

@@ -44,7 +44,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     }];
 }
 
-- (void)testDeallocOnCancel
+- (void)testDeallocOnCancelBeforeStart
 {
     __weak ISHTTPOperation *woperation;
     
@@ -54,6 +54,25 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation cancel];
+        [NSThread sleepForTimeInterval:.1];
+    }
+    
+    STAssertNil(woperation, nil);
+    self.isFinished = YES;
+}
+
+- (void)testDeallocOnCancelAfterStart
+{
+    __weak ISHTTPOperation *woperation;
+    
+    @autoreleasepool {
+        NSURL *URL = [NSURL URLWithString:ISTestURL];
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+        ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
+        woperation = operation;
+        [operation start];
+        [operation cancel];
+        [NSThread sleepForTimeInterval:.1];
     }
     
     STAssertNil(woperation, nil);
@@ -84,7 +103,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
     [queue cancelAllOperations];
     
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
+    [NSThread sleepForTimeInterval:.1];
     STAssertEquals([queue operationCount], 0U, nil);
     self.isFinished = YES;
 }

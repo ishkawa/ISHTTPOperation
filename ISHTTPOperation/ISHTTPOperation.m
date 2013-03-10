@@ -66,24 +66,18 @@
     }
     
     self.isExecuting = YES;
+    self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
     
-    self.connection = [[NSURLConnection alloc] initWithRequest:self.request
-                                                      delegate:self
-                                              startImmediately:NO];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        [self.connection start];
-        
+    if (![NSThread isMainThread]) {
         do {
             if (self.isCancelled) {
                 self.isExecuting = NO;
                 self.isFinished = YES;
                 break;
             }
-            [[NSRunLoop currentRunLoop] run];
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
         } while (self.isExecuting);
-    });
+    }
 }
 
 - (void)cancel

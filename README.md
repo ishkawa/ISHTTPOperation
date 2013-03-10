@@ -18,12 +18,12 @@ NSURLRequest *request = [NSURLRequest requestWithURL:URL];
 }];
 ```
 
-the operations made by `sendRequest:handler:` will be enqueued to `[ISHTTPOperation sharedQueue]`.
+the operations made by `sendRequest:handler:` will be enqueued to `[NSOperationQueue defaultHTTPQueue]`.
 
 ### Cancel operations
 
 ```objectivec
-[[ISHTTPOperation sharedQueue] cancelAllOperations];
+[[NSOperationQueue defaultHTTPQueue] cancelAllOperations];
 ```
 
 ## Installing
@@ -46,7 +46,7 @@ observe `operationCount` key of `[ISHTTPOperation sharedQueue]`.
 ```objectivec
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
+    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     [queue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
 
     ...
@@ -58,25 +58,12 @@ observe `operationCount` key of `[ISHTTPOperation sharedQueue]`.
 {
     if ([keyPath isEqualToString:@"operationCount"]) {
         UIApplication *application = [UIApplication sharedApplication];
-        NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
+        NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
         application.networkActivityIndicatorVisible = [queue operationCount] ? YES : NO;
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
-```
-
-### Start directly (not enqueue to NSOperationQueue)
-
-```objectivec
-NSURL *URL = [NSURL URLWithString:@"http://date.jsontest.com"];
-NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-ISHTTPOperation *opeation =
-[[ISHTTPOperation alloc] initWithRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-    ;
-}];
-
-[operation start];
 ```
 
 ### Add data processing 

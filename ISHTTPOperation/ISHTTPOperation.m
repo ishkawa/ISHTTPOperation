@@ -13,24 +13,21 @@
 
 @implementation ISHTTPOperation
 
-+ (NSOperationQueue *)sharedQueue
-{
-    static NSOperationQueue *queue = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        queue = [[NSOperationQueue alloc] init];
-    });
-    
-    return queue;
-}
-
 #pragma mark -
 
 + (void)sendRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *, id, NSError *))handler
 {
+    [self sendRequest:request
+                queue:[NSOperationQueue defaultHTTPQueue]
+              handler:handler];
+}
+
++ (void)sendRequest:(NSURLRequest *)request
+              queue:(NSOperationQueue *)queue
+            handler:(void (^)(NSHTTPURLResponse *, id, NSError *))handler
+{
     ISHTTPOperation *operation = [[[self class] alloc] initWithRequest:request handler:handler];
-    
-    [[[self class] sharedQueue] addOperation:operation];
+    [queue addOperation:operation];
 }
 
 - (id)initWithRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler

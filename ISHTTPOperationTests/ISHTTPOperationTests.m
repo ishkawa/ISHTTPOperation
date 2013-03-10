@@ -89,7 +89,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
         [ISHTTPOperation sendRequest:request handler:nil];
     }
     
-    NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
+    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     STAssertEquals([queue operationCount], limit, nil);
     self.isFinished = YES;
 }
@@ -100,7 +100,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [ISHTTPOperation sendRequest:request handler:nil];
     
-    NSOperationQueue *queue = [ISHTTPOperation sharedQueue];
+    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     [queue cancelAllOperations];
     
     [NSThread sleepForTimeInterval:.1];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F382E1216EC80D0008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
+		7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
 		7F907E7016E4A1B9005D06BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6F16E4A1B9005D06BA /* Foundation.framework */; };
 		7F907E7516E4A1B9005D06BA /* ISHTTPOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */; };
 		7F907E7716E4A1B9005D06BA /* ISHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */; };
@@ -53,6 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+HTTP.h"; sourceTree = "<group>"; };
+		7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+HTTP.m"; sourceTree = "<group>"; };
 		7F907E6C16E4A1B9005D06BA /* libISHTTPOperation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISHTTPOperation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F907E6F16E4A1B9005D06BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperation.h; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 			children = (
 				7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */,
 				7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */,
+				7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */,
+				7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */,
 			);
 			path = ISHTTPOperation;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F907E7716E4A1B9005D06BA /* ISHTTPOperation.m in Sources */,
+				7F382E1216EC80D0008796E9 /* NSOperationQueue+HTTP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +344,7 @@
 			files = (
 				7F907E9016E4A9AB005D06BA /* ISHTTPOperationTests.m in Sources */,
 				7F907E9516E4AA5A005D06BA /* ISHTTPOperation.m in Sources */,
+				7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +475,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISHTTPOperationTests/ISHTTPOperationTests-Prefix.pch";
 				INFOPLIST_FILE = "ISHTTPOperationTests/ISHTTPOperationTests-Info.plist";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -482,6 +491,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISHTTPOperationTests/ISHTTPOperationTests-Prefix.pch";
 				INFOPLIST_FILE = "ISHTTPOperationTests/ISHTTPOperationTests-Info.plist";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -499,6 +509,7 @@
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ISHTTPOp;
 				WRAPPER_EXTENSION = app;
 			};
@@ -517,6 +528,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ISHTTPOp;
 				WRAPPER_EXTENSION = app;
 			};

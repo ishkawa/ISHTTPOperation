@@ -1,12 +1,17 @@
 #import <Foundation/Foundation.h>
+#import "NSOperationQueue+HTTP.h"
 
 @interface ISHTTPOperation : NSOperation
 
 @property (nonatomic, strong) NSURLRequest *request;
 @property (nonatomic, copy) void (^handler)(NSHTTPURLResponse *response, id object, NSError *error);
 
-+ (NSOperationQueue *)sharedQueue;
-+ (void)sendRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
++ (void)sendRequest:(NSURLRequest *)request
+            handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
+
++ (void)sendRequest:(NSURLRequest *)request
+              queue:(NSOperationQueue *)queue
+            handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
 
 - (id)initWithRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
 - (id)processData:(NSData *)data;

@@ -2,12 +2,15 @@
 
 @interface ISHTTPOperation () <NSURLConnectionDataDelegate>
 
-@property BOOL isExecuting;
-@property BOOL isFinished;
-
 @property (nonatomic, strong) NSURLConnection   *connection;
 @property (nonatomic, strong) NSHTTPURLResponse *response;
 @property (nonatomic, strong) NSMutableData     *data;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+@property (nonatomic, assign) dispatch_semaphore_t semaphore;
+#else
+@property (nonatomic, strong) dispatch_semaphore_t semaphore;
+#endif
+
 
 @end
 
@@ -30,24 +33,42 @@
     [queue addOperation:operation];
 }
 
+- (id)init
+{
+    return [self initWithRequest:nil handler:nil];
+}
+
 - (id)initWithRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler
 {
     self = [super init];
     if (self) {
         self.request = request;
         self.handler = handler;
+        self.semaphore = dispatch_semaphore_create(1);
+        
+        _finished = NO;
+        _executing = NO;
     }
     return self;
 }
 
+- (void)dealloc
+{
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    dispatch_release(self.semaphore);
+#endif
+}
+
 #pragma mark - KVO
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+- (BOOL)isExecuting
 {
-    if ([key isEqualToString:@"isExecuting"] || [key isEqualToString:@"isFinished"]) {
-        return YES;
-    }
-    return [super automaticallyNotifiesObserversForKey:key];
+    return _executing;
+}
+
+- (BOOL)isFinished
+{
+    return _finished;
 }
 
 - (BOOL)isConcurrent
@@ -60,32 +81,57 @@
 - (void)start
 {
     if (self.isCancelled) {
-        self.isExecuting = NO;
-        self.isFinished = YES;
+        [self willChangeValueForKey:@"isFinished"];
+        _finished = YES;
+        [self didChangeValueForKey:@"isFinished"];
+        
         return;
     }
     
-    self.isExecuting = YES;
-    self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
-    
-    if (![NSThread isMainThread]) {
-        do {
-            if (self.isCancelled) {
-                self.isExecuting = NO;
-                self.isFinished = YES;
-                break;
-            }
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        } while (self.isExecuting);
+    [self willChangeValueForKey:@"isExecuting"];
+    [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
+    _executing = YES;
+    [self didChangeValueForKey:@"isExecuting"];
+}
+
+- (void)main
+{
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    if (self.isCancelled) {
+        [self completeOperation];
+        dispatch_semaphore_signal(self.semaphore);
+        
+        return;
     }
+    self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
+    dispatch_semaphore_signal(self.semaphore);
+    
+    do {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        if (self.isCancelled) {
+            [self completeOperation];
+        }
+    } while (self.isExecuting);
 }
 
 - (void)cancel
 {
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     [self.connection cancel];
     self.connection = nil;
+    dispatch_semaphore_signal(self.semaphore);
     
     [super cancel];
+}
+
+- (void)completeOperation
+{
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    _executing = NO;
+    _finished = YES;
+    [self didChangeValueForKey:@"isExecuting"];
+    [self didChangeValueForKey:@"isFinished"];
 }
 
 #pragma mark - override in subclasses
@@ -117,8 +163,7 @@
         });
     }
     
-    self.isExecuting = NO;
-    self.isFinished = YES;
+    [self completeOperation];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -129,8 +174,7 @@
         });
     }
     
-    self.isExecuting = NO;
-    self.isFinished = YES;
+    [self completeOperation];
 }
 
 @end

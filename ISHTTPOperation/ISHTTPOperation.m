@@ -5,10 +5,10 @@
 @property (nonatomic, strong) NSURLConnection   *connection;
 @property (nonatomic, strong) NSHTTPURLResponse *response;
 @property (nonatomic, strong) NSMutableData     *data;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
-@property (nonatomic, assign) dispatch_semaphore_t semaphore;
-#else
+#if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
+#else
+@property (nonatomic, assign) dispatch_semaphore_t semaphore;
 #endif
 
 
@@ -54,7 +54,7 @@
 
 - (void)dealloc
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+#if !OS_OBJECT_USE_OBJC
     dispatch_release(self.semaphore);
 #endif
 }

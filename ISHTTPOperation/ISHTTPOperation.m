@@ -107,9 +107,11 @@
     dispatch_semaphore_signal(self.semaphore);
     
     do {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-        if (self.isCancelled) {
-            [self completeOperation];
+        @autoreleasepool {
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+            if (self.isCancelled) {
+                [self completeOperation];
+            }
         }
     } while (self.isExecuting);
 }

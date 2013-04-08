@@ -103,7 +103,9 @@
         
         return;
     }
-    self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
+    @autoreleasepool {
+        self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
+    }
     dispatch_semaphore_signal(self.semaphore);
     
     do {

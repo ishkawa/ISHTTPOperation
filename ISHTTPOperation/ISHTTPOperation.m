@@ -80,7 +80,7 @@
 
 - (void)start
 {
-    if (self.isCancelled) {
+    if (self.isCancelled || !self.request) {
         [self willChangeValueForKey:@"isFinished"];
         _finished = YES;
         [self didChangeValueForKey:@"isFinished"];

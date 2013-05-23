@@ -1,6 +1,6 @@
 #import "ISHTTPOperation.h"
 
-@interface ISHTTPOperation () <NSURLConnectionDataDelegate>
+@interface ISHTTPOperation ()
 
 @property (nonatomic, strong) NSURLConnection   *connection;
 @property (nonatomic, strong) NSHTTPURLResponse *response;

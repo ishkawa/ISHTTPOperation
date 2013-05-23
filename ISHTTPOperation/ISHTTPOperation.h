@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "NSOperationQueue+HTTP.h"
 
-@interface ISHTTPOperation : NSOperation {
+@interface ISHTTPOperation : NSOperation <NSURLConnectionDataDelegate> {
     BOOL _executing;
     BOOL _finished;
 }

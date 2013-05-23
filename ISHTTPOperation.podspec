@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "ISHTTPOperation"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "a subclass of NSOperation to wrap asynchronous NSURLConnection."
   s.homepage     = "https://github.com/ishkawa/ISHTTPOperation"
   s.author       = { "Yosuke Ishikawa" => "y@ishkawa.org" }
-  s.source       = { :git => "https://github.com/ishkawa/ISHTTPOperation.git", :tag => "1.0.0" }
-  s.platform     = :ios, '4.0'
+  s.source       = { :git => "https://github.com/ishkawa/ISHTTPOperation.git", :tag => "1.0.1" }
+  s.platform     = :ios, '4.3'
   s.requires_arc = true
   s.source_files = 'ISHTTPOperation/**/*.{h,m}'
   s.license      = {

@@ -115,7 +115,7 @@
                 [self completeOperation];
             }
         }
-    } while (self.isExecuting);
+    } while (self.isExecuting && !self.isFinished);
 }
 
 - (void)cancel

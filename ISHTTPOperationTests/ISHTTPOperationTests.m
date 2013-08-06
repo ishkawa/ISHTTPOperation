@@ -1,7 +1,16 @@
-#import "ISHTTPOperationTests.h"
 #import "ISHTTPOperation.h"
+#import <OHHTTPStubs/OHHTTPStubs.h>
 
-static NSString *const ISTestURL = @"http://date.jsontest.com";
+static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
+
+#import <SenTestingKit/SenTestingKit.h>
+
+@interface ISHTTPOperationTests : SenTestCase {
+    NSURLRequest *request;
+    BOOL finished;
+}
+
+@end
 
 @implementation ISHTTPOperationTests
 
@@ -9,14 +18,26 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 {
     [super setUp];
     
-    self.isFinished = NO;
+    NSURL *URL = [NSURL URLWithString:ISHTTPOperationTestsURL];
+    request = [NSURLRequest requestWithURL:URL];
+    finished = NO;
+    
+    [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
+        NSData *data = [@"OK" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:data
+                                          statusCode:200
+                                        responseTime:0.1
+                                             headers:nil];
+    }];
 }
 
 - (void)tearDown
 {
     do {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (!self.isFinished);
+    } while (!finished);
+    
+    [OHHTTPStubs removeAllRequestHandlers];
     
     [super tearDown];
 }
@@ -25,22 +46,27 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 
 - (void)testCompletionHandlerIsCalledOnMainThread
 {
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
         STAssertTrue([NSThread isMainThread], nil);
-        self.isFinished = YES;
+        finished = YES;
     }];
 }
 
 - (void)testFailureHandlerIsCalledOnMainThread
 {
-    NSURL *URL = [NSURL URLWithString:@"http://fsdafkjlfasda.org"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSError *error = [NSError errorWithDomain:NSURLErrorDomain
+                                         code:-1003
+                                     userInfo:nil];
+    
+    [OHHTTPStubs removeAllRequestHandlers];
+    [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
+        return [OHHTTPStubsResponse responseWithError:error];
+    }];
+    
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
         STAssertNotNil(error, nil);
         STAssertTrue([NSThread isMainThread], nil);
-        self.isFinished = YES;
+        finished = YES;
     }];
 }
 
@@ -49,8 +75,6 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
-        NSURL *URL = [NSURL URLWithString:ISTestURL];
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation cancel];
@@ -58,7 +82,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     }
     
     STAssertNil(woperation, nil);
-    self.isFinished = YES;
+    finished = YES;
 }
 
 - (void)testDeallocOnCancelAfterStart
@@ -66,8 +90,6 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
-        NSURL *URL = [NSURL URLWithString:ISTestURL];
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation start];
@@ -76,28 +98,23 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     }
     
     STAssertNil(woperation, nil);
-    self.isFinished = YES;
+    finished = YES;
 }
 
 - (void)testQueueing
 {
     NSUInteger limit = 10;
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
     for (NSInteger i=0; i<limit; i++) {
         [ISHTTPOperation sendRequest:request handler:nil];
     }
     
     NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     STAssertEquals([queue operationCount], limit, nil);
-    self.isFinished = YES;
+    finished = YES;
 }
 
 - (void)testCancel
 {
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [ISHTTPOperation sendRequest:request handler:nil];
     
     NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
@@ -105,7 +122,7 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
     
     [NSThread sleepForTimeInterval:.1];
     STAssertEquals([queue operationCount], 0U, nil);
-    self.isFinished = YES;
+    finished = YES;
 }
 
 @end

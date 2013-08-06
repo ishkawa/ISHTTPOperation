@@ -29,6 +29,7 @@
 		7F907EB016E59123005D06BA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F907EAF16E59123005D06BA /* Default-568h@2x.png */; };
 		7F907EB616E5915D005D06BA /* libISHTTPOperation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6C16E4A1B9005D06BA /* libISHTTPOperation.a */; };
 		7F907EB916E59225005D06BA /* ISViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907EB816E59225005D06BA /* ISViewController.m */; };
+		AFCD0AD3FB19493790ACCCDF /* libPods-ISHTTPOperationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B237AE50B4149368465CB44 /* libPods-ISHTTPOperationTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B237AE50B4149368465CB44 /* libPods-ISHTTPOperationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ISHTTPOperationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+HTTP.h"; sourceTree = "<group>"; };
 		7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+HTTP.m"; sourceTree = "<group>"; };
 		7F907E6C16E4A1B9005D06BA /* libISHTTPOperation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISHTTPOperation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,7 +68,6 @@
 		7F907E8516E4A9AB005D06BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7F907E8A16E4A9AB005D06BA /* ISHTTPOperationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISHTTPOperationTests-Info.plist"; sourceTree = "<group>"; };
 		7F907E8C16E4A9AB005D06BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7F907E8E16E4A9AB005D06BA /* ISHTTPOperationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperationTests.h; sourceTree = "<group>"; };
 		7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISHTTPOperationTests.m; sourceTree = "<group>"; };
 		7F907E9116E4A9AB005D06BA /* ISHTTPOperationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISHTTPOperationTests-Prefix.pch"; sourceTree = "<group>"; };
 		7F907E9A16E59123005D06BA /* ISHTTPOp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ISHTTPOp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +83,7 @@
 		7F907EAF16E59123005D06BA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7F907EB716E59225005D06BA /* ISViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISViewController.h; sourceTree = "<group>"; };
 		7F907EB816E59225005D06BA /* ISViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISViewController.m; sourceTree = "<group>"; };
+		F596B8A249BD41B49EF24D48 /* Pods-ISHTTPOperationTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ISHTTPOperationTests.xcconfig"; path = "Pods/Pods-ISHTTPOperationTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				7F907E8416E4A9AB005D06BA /* SenTestingKit.framework in Frameworks */,
 				7F907E8616E4A9AB005D06BA /* UIKit.framework in Frameworks */,
 				7F907E8716E4A9AB005D06BA /* Foundation.framework in Frameworks */,
+				AFCD0AD3FB19493790ACCCDF /* libPods-ISHTTPOperationTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +128,7 @@
 				7F907E9F16E59123005D06BA /* DemoApp */,
 				7F907E6E16E4A1B9005D06BA /* Frameworks */,
 				7F907E6D16E4A1B9005D06BA /* Products */,
+				F596B8A249BD41B49EF24D48 /* Pods-ISHTTPOperationTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,6 +149,7 @@
 				7F907E8316E4A9AB005D06BA /* SenTestingKit.framework */,
 				7F907E8516E4A9AB005D06BA /* UIKit.framework */,
 				7F907E9D16E59123005D06BA /* CoreGraphics.framework */,
+				1B237AE50B4149368465CB44 /* libPods-ISHTTPOperationTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,7 +168,6 @@
 		7F907E8816E4A9AB005D06BA /* ISHTTPOperationTests */ = {
 			isa = PBXGroup;
 			children = (
-				7F907E8E16E4A9AB005D06BA /* ISHTTPOperationTests.h */,
 				7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */,
 				7F907E8916E4A9AB005D06BA /* Supporting Files */,
 			);
@@ -230,10 +234,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F907E9216E4A9AB005D06BA /* Build configuration list for PBXNativeTarget "ISHTTPOperationTests" */;
 			buildPhases = (
+				B11724F48BCE4D0F9CF76305 /* Check Pods Manifest.lock */,
 				7F907E7D16E4A9AB005D06BA /* Sources */,
 				7F907E7E16E4A9AB005D06BA /* Frameworks */,
 				7F907E7F16E4A9AB005D06BA /* Resources */,
 				7F907E8016E4A9AB005D06BA /* ShellScript */,
+				6B81284D92734321971468E0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,6 +319,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6B81284D92734321971468E0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-ISHTTPOperationTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7F907E8016E4A9AB005D06BA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -325,6 +346,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		B11724F48BCE4D0F9CF76305 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -467,6 +503,7 @@
 		};
 		7F907E9316E4A9AB005D06BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F596B8A249BD41B49EF24D48 /* Pods-ISHTTPOperationTests.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
@@ -483,6 +520,7 @@
 		};
 		7F907E9416E4A9AB005D06BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F596B8A249BD41B49EF24D48 /* Pods-ISHTTPOperationTests.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",

@@ -1,0 +1,21 @@
+PODS:
+  - OCMock (2.2)
+  - OCMockObject+Lazy (0.0.1):
+    - OCMock (~> 2.2)
+  - OHHTTPStubs (1.1.2)
+
+DEPENDENCIES:
+  - OCMock (~> 2.2)
+  - OCMockObject+Lazy (from `git@github.com:ishkawa/OCMockObject-Lazy.git`)
+  - OHHTTPStubs (~> 1.1.2)
+
+EXTERNAL SOURCES:
+  OCMockObject+Lazy:
+    :git: git@github.com:ishkawa/OCMockObject-Lazy.git
+
+SPEC CHECKSUMS:
+  OCMock: 5300ae6b75398fc3ae6cbf9102191333d35f6852
+  OCMockObject+Lazy: 2346946ab91043f9ca505080255327e639cc9375
+  OHHTTPStubs: a840cb0fe0c2a4271018be540782cc97139dff53
+
+COCOAPODS: 0.22.3

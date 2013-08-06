@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7F382E1216EC80D0008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
 		7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
+		7F3BD18617B1BA7A0069912B /* SenTestCase+Async.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */; };
 		7F907E7016E4A1B9005D06BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6F16E4A1B9005D06BA /* Foundation.framework */; };
 		7F907E7516E4A1B9005D06BA /* ISHTTPOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */; };
 		7F907E7716E4A1B9005D06BA /* ISHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */; };
@@ -59,6 +60,8 @@
 		1B237AE50B4149368465CB44 /* libPods-ISHTTPOperationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ISHTTPOperationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+HTTP.h"; sourceTree = "<group>"; };
 		7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+HTTP.m"; sourceTree = "<group>"; };
+		7F3BD18417B1BA7A0069912B /* SenTestCase+Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+Async.h"; sourceTree = "<group>"; };
+		7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+Async.m"; sourceTree = "<group>"; };
 		7F907E6C16E4A1B9005D06BA /* libISHTTPOperation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISHTTPOperation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F907E6F16E4A1B9005D06BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperation.h; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 		7F907E8816E4A9AB005D06BA /* ISHTTPOperationTests */ = {
 			isa = PBXGroup;
 			children = (
+				7F3BD18417B1BA7A0069912B /* SenTestCase+Async.h */,
+				7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */,
 				7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */,
 				7F907E8916E4A9AB005D06BA /* Supporting Files */,
 			);
@@ -381,6 +386,7 @@
 				7F907E9016E4A9AB005D06BA /* ISHTTPOperationTests.m in Sources */,
 				7F907E9516E4AA5A005D06BA /* ISHTTPOperation.m in Sources */,
 				7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */,
+				7F3BD18617B1BA7A0069912B /* SenTestCase+Async.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

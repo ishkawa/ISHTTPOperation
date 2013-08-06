@@ -1,4 +1,5 @@
 #import "ISHTTPOperation.h"
+#import "SenTestCase+Async.h"
 #import <OHHTTPStubs/OHHTTPStubs.h>
 
 static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
@@ -9,7 +10,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     NSURLRequest *request;
     NSError *connectionError;
     NSData *responseData;
-    BOOL waiting;
     BOOL shouldReturnErrorResponse;
 }
 
@@ -28,7 +28,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
                                           code:-1003
                                       userInfo:nil];
     
-    waiting = NO;
     shouldReturnErrorResponse = NO;
     
     [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
@@ -49,20 +48,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 {
     [OHHTTPStubs removeAllRequestHandlers];
     [super tearDown];
-}
-
-- (void)startWaiting
-{
-    waiting = YES;
-    
-    do {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (waiting);
-}
-
-- (void)stopWaiting
-{
-    waiting = NO;
 }
 
 #pragma mark - serial tasks
@@ -95,31 +80,33 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
 - (void)testDeallocOnCancelBeforeStart
 {
-    __weak ISHTTPOperation *woperation;
+    __block __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation cancel];
-        [NSThread sleepForTimeInterval:.1];
     }
     
-    STAssertNil(woperation, nil);
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return woperation == nil;
+    }];
 }
 
 - (void)testDeallocOnCancelAfterStart
 {
-    __weak ISHTTPOperation *woperation;
+    __block __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation start];
         [operation cancel];
-        [NSThread sleepForTimeInterval:.1];
     }
     
-    STAssertNil(woperation, nil);
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return woperation == nil;
+    }];
 }
 
 #pragma mark - control
@@ -142,8 +129,9 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     [queue cancelAllOperations];
     
-    [NSThread sleepForTimeInterval:.1];
-    STAssertEquals([queue operationCount], 0U, nil);
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return [queue operationCount] == 0U;
+    }];
 }
 
 @end

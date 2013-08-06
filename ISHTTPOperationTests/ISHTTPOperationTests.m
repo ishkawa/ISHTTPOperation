@@ -7,7 +7,10 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
 @interface ISHTTPOperationTests : SenTestCase {
     NSURLRequest *request;
-    BOOL finished;
+    NSError *connectionError;
+    NSData *responseData;
+    BOOL waiting;
+    BOOL shouldReturnErrorResponse;
 }
 
 @end
@@ -20,55 +23,75 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     NSURL *URL = [NSURL URLWithString:ISHTTPOperationTestsURL];
     request = [NSURLRequest requestWithURL:URL];
-    finished = NO;
+    responseData = [@"OK" dataUsingEncoding:NSUTF8StringEncoding];
+    connectionError = [NSError errorWithDomain:NSURLErrorDomain
+                                          code:-1003
+                                      userInfo:nil];
+    
+    waiting = NO;
+    shouldReturnErrorResponse = NO;
     
     [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
-        NSData *data = [@"OK" dataUsingEncoding:NSUTF8StringEncoding];
-        return [OHHTTPStubsResponse responseWithData:data
-                                          statusCode:200
-                                        responseTime:0.1
-                                             headers:nil];
+        OHHTTPStubsResponse *response;
+        if (shouldReturnErrorResponse) {
+            response = [OHHTTPStubsResponse responseWithError:connectionError];
+        } else {
+            response = [OHHTTPStubsResponse responseWithData:responseData
+                                                  statusCode:200
+                                                responseTime:0.1
+                                                     headers:nil];
+        }
+        return response;
     }];
 }
 
 - (void)tearDown
 {
-    do {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (!finished);
-    
     [OHHTTPStubs removeAllRequestHandlers];
-    
     [super tearDown];
 }
 
-#pragma mark - tests
-
-- (void)testCompletionHandlerIsCalledOnMainThread
+- (void)startWaiting
 {
-    [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-        STAssertTrue([NSThread isMainThread], nil);
-        finished = YES;
-    }];
+    waiting = YES;
+    
+    do {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    } while (waiting);
 }
 
-- (void)testFailureHandlerIsCalledOnMainThread
+- (void)stopWaiting
 {
-    NSError *error = [NSError errorWithDomain:NSURLErrorDomain
-                                         code:-1003
-                                     userInfo:nil];
-    
-    [OHHTTPStubs removeAllRequestHandlers];
-    [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
-        return [OHHTTPStubsResponse responseWithError:error];
+    waiting = NO;
+}
+
+#pragma mark - serial tasks
+
+- (void)testNormalConnection
+{
+    [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
+        STAssertEqualObjects(object, responseData, @"response object does not match.");
+        STAssertTrue([NSThread isMainThread], nil);
+        [self stopWaiting];
     }];
+    
+    [self startWaiting];
+}
+
+- (void)testErrorConnection
+{
+    shouldReturnErrorResponse = YES;
     
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-        STAssertNotNil(error, nil);
+        STAssertEquals(error.code, connectionError.code, @"error code does not match.");
         STAssertTrue([NSThread isMainThread], nil);
-        finished = YES;
+        [self stopWaiting];
     }];
+    
+    [self startWaiting];
 }
+
+#pragma mark - memory management
 
 - (void)testDeallocOnCancelBeforeStart
 {
@@ -82,7 +105,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     }
     
     STAssertNil(woperation, nil);
-    finished = YES;
 }
 
 - (void)testDeallocOnCancelAfterStart
@@ -98,8 +120,9 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     }
     
     STAssertNil(woperation, nil);
-    finished = YES;
 }
+
+#pragma mark - control
 
 - (void)testQueueing
 {
@@ -110,7 +133,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
     STAssertEquals([queue operationCount], limit, nil);
-    finished = YES;
 }
 
 - (void)testCancel
@@ -122,7 +144,6 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     [NSThread sleepForTimeInterval:.1];
     STAssertEquals([queue operationCount], 0U, nil);
-    finished = YES;
 }
 
 @end

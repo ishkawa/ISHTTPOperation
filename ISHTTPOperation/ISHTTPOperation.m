@@ -96,17 +96,17 @@
 
 - (void)main
 {
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    if (self.isCancelled) {
-        [self completeOperation];
-        dispatch_semaphore_signal(self.semaphore);
-        
-        return;
-    }
     @autoreleasepool {
+        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+        if (self.isCancelled) {
+            [self completeOperation];
+            dispatch_semaphore_signal(self.semaphore);
+            
+            return;
+        }
         self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
+        dispatch_semaphore_signal(self.semaphore);
     }
-    dispatch_semaphore_signal(self.semaphore);
     
     do {
         @autoreleasepool {

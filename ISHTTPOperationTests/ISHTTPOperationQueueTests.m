@@ -52,6 +52,11 @@ static NSString *const ISHTTPOperationAnotherTestsURL = @"http://www.example2.co
     [super tearDown];
 }
 
+- (void)testDefaultQueue
+{
+    STAssertEqualObjects([ISHTTPOperationQueue defaultQueue], [ISHTTPOperationQueue defaultQueue], nil);
+}
+
 - (void)testCancelOperationsWithHTTPMethod
 {
     [queue cancelOperationsWithHTTPMethod:operation.request.HTTPMethod];

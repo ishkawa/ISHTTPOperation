@@ -1,6 +1,6 @@
 #import "ISHTTPOperation.h"
 #import "SenTestCase+Async.h"
-#import <OHHTTPStubs/OHHTTPStubs.h>
+#import "OHHTTPStubs/OHHTTPStubs.h"
 
 static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
@@ -118,7 +118,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
         [ISHTTPOperation sendRequest:request handler:nil];
     }
     
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     STAssertEquals([queue operationCount], limit, nil);
 }
 
@@ -126,7 +126,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 {
     [ISHTTPOperation sendRequest:request handler:nil];
     
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     [queue cancelAllOperations];
     
     [self waitUntilSatisfyingCondition:^BOOL{

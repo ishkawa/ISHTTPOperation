@@ -21,7 +21,7 @@
 + (void)sendRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *, id, NSError *))handler
 {
     [self sendRequest:request
-                queue:[NSOperationQueue defaultHTTPQueue]
+                queue:[ISHTTPOperationQueue defaultQueue]
               handler:handler];
 }
 

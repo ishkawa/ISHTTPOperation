@@ -23,7 +23,18 @@ the operations made by `sendRequest:handler:` will be enqueued to `[NSOperationQ
 ### Cancel operations
 
 ```objectivec
-[[NSOperationQueue defaultHTTPQueue] cancelAllOperations];
+[[ISHTTPOperationQueue defaultQueue] cancelAllOperations];
+```
+
+```objectivec
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"request.HTTPMethod MATCHES %@", @"GET"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsUsingPredicate:predicate];
+```
+
+```objectivec
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHTTPMethod:@"GET"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHost:@"example.com"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithPath:@"/foo"];
 ```
 
 ## Installing

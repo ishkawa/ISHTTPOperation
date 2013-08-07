@@ -2,6 +2,7 @@
 
 @interface NSOperationQueue (HTTP)
 
-+ (NSOperationQueue *)defaultHTTPQueue;
+// use [ISHTTPOperationQueue defaultQueue] instead.
++ (NSOperationQueue *)defaultHTTPQueue DEPRECATED_ATTRIBUTE;
 
 @end

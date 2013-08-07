@@ -7,18 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F24F93217B1CC73003483FA /* ISHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F93117B1CC73003483FA /* ISHTTPOperationQueue.m */; };
+		7F24F94117B1CC8E003483FA /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F24F93417B1CC8E003483FA /* libOCMock.a */; };
+		7F24F94217B1CC8E003483FA /* OHHTTPStubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F93E17B1CC8E003483FA /* OHHTTPStubs.m */; };
+		7F24F94317B1CC8E003483FA /* OHHTTPStubsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F94017B1CC8E003483FA /* OHHTTPStubsResponse.m */; };
+		7F24F94417B1CCEC003483FA /* ISHTTPOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F93117B1CC73003483FA /* ISHTTPOperationQueue.m */; };
+		7F24F94617B1CD17003483FA /* ISHTTPOperationQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F94517B1CD17003483FA /* ISHTTPOperationQueueTests.m */; };
+		7F24F94817B1CFCA003483FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F24F94717B1CFCA003483FA /* UIKit.framework */; };
+		7F24F94B17B1D41E003483FA /* NSOperationQueueHTTPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F24F94A17B1D41E003483FA /* NSOperationQueueHTTPTests.m */; };
 		7F382E1216EC80D0008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
 		7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */; };
+		7F3BD18617B1BA7A0069912B /* SenTestCase+Async.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */; };
 		7F907E7016E4A1B9005D06BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6F16E4A1B9005D06BA /* Foundation.framework */; };
 		7F907E7516E4A1B9005D06BA /* ISHTTPOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */; };
 		7F907E7716E4A1B9005D06BA /* ISHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */; };
 		7F907E8416E4A9AB005D06BA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E8316E4A9AB005D06BA /* SenTestingKit.framework */; };
-		7F907E8616E4A9AB005D06BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E8516E4A9AB005D06BA /* UIKit.framework */; };
 		7F907E8716E4A9AB005D06BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6F16E4A1B9005D06BA /* Foundation.framework */; };
 		7F907E8D16E4A9AB005D06BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F907E8B16E4A9AB005D06BA /* InfoPlist.strings */; };
 		7F907E9016E4A9AB005D06BA /* ISHTTPOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */; };
 		7F907E9516E4AA5A005D06BA /* ISHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */; };
-		7F907E9B16E59123005D06BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E8516E4A9AB005D06BA /* UIKit.framework */; };
 		7F907E9C16E59123005D06BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E6F16E4A1B9005D06BA /* Foundation.framework */; };
 		7F907E9E16E59123005D06BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F907E9D16E59123005D06BA /* CoreGraphics.framework */; };
 		7F907EA416E59123005D06BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F907EA216E59123005D06BA /* InfoPlist.strings */; };
@@ -55,18 +62,34 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7F24F93017B1CC73003483FA /* ISHTTPOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperationQueue.h; sourceTree = "<group>"; };
+		7F24F93117B1CC73003483FA /* ISHTTPOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISHTTPOperationQueue.m; sourceTree = "<group>"; };
+		7F24F93417B1CC8E003483FA /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		7F24F93617B1CC8E003483FA /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		7F24F93717B1CC8E003483FA /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		7F24F93817B1CC8E003483FA /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		7F24F93917B1CC8E003483FA /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		7F24F93A17B1CC8E003483FA /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		7F24F93B17B1CC8E003483FA /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
+		7F24F93D17B1CC8E003483FA /* OHHTTPStubs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHHTTPStubs.h; sourceTree = "<group>"; };
+		7F24F93E17B1CC8E003483FA /* OHHTTPStubs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHHTTPStubs.m; sourceTree = "<group>"; };
+		7F24F93F17B1CC8E003483FA /* OHHTTPStubsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHHTTPStubsResponse.h; sourceTree = "<group>"; };
+		7F24F94017B1CC8E003483FA /* OHHTTPStubsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHHTTPStubsResponse.m; sourceTree = "<group>"; };
+		7F24F94517B1CD17003483FA /* ISHTTPOperationQueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISHTTPOperationQueueTests.m; sourceTree = "<group>"; };
+		7F24F94717B1CFCA003483FA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7F24F94A17B1D41E003483FA /* NSOperationQueueHTTPTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOperationQueueHTTPTests.m; sourceTree = "<group>"; };
 		7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+HTTP.h"; sourceTree = "<group>"; };
 		7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+HTTP.m"; sourceTree = "<group>"; };
+		7F3BD18417B1BA7A0069912B /* SenTestCase+Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+Async.h"; sourceTree = "<group>"; };
+		7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+Async.m"; sourceTree = "<group>"; };
 		7F907E6C16E4A1B9005D06BA /* libISHTTPOperation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libISHTTPOperation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F907E6F16E4A1B9005D06BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperation.h; sourceTree = "<group>"; };
 		7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISHTTPOperation.m; sourceTree = "<group>"; };
 		7F907E8216E4A9AB005D06BA /* ISHTTPOperationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ISHTTPOperationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F907E8316E4A9AB005D06BA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		7F907E8516E4A9AB005D06BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7F907E8A16E4A9AB005D06BA /* ISHTTPOperationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ISHTTPOperationTests-Info.plist"; sourceTree = "<group>"; };
 		7F907E8C16E4A9AB005D06BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7F907E8E16E4A9AB005D06BA /* ISHTTPOperationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISHTTPOperationTests.h; sourceTree = "<group>"; };
 		7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISHTTPOperationTests.m; sourceTree = "<group>"; };
 		7F907E9116E4A9AB005D06BA /* ISHTTPOperationTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ISHTTPOperationTests-Prefix.pch"; sourceTree = "<group>"; };
 		7F907E9A16E59123005D06BA /* ISHTTPOp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ISHTTPOp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,8 +121,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F907E8416E4A9AB005D06BA /* SenTestingKit.framework in Frameworks */,
-				7F907E8616E4A9AB005D06BA /* UIKit.framework in Frameworks */,
 				7F907E8716E4A9AB005D06BA /* Foundation.framework in Frameworks */,
+				7F24F94117B1CC8E003483FA /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +130,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F24F94817B1CFCA003483FA /* UIKit.framework in Frameworks */,
 				7F907EB616E5915D005D06BA /* libISHTTPOperation.a in Frameworks */,
-				7F907E9B16E59123005D06BA /* UIKit.framework in Frameworks */,
 				7F907E9C16E59123005D06BA /* Foundation.framework in Frameworks */,
 				7F907E9E16E59123005D06BA /* CoreGraphics.framework in Frameworks */,
 			);
@@ -117,6 +140,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F24F93317B1CC8E003483FA /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				7F24F93417B1CC8E003483FA /* libOCMock.a */,
+				7F24F93517B1CC8E003483FA /* OCMock */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		7F24F93517B1CC8E003483FA /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				7F24F93617B1CC8E003483FA /* NSNotificationCenter+OCMAdditions.h */,
+				7F24F93717B1CC8E003483FA /* OCMArg.h */,
+				7F24F93817B1CC8E003483FA /* OCMConstraint.h */,
+				7F24F93917B1CC8E003483FA /* OCMock.h */,
+				7F24F93A17B1CC8E003483FA /* OCMockObject.h */,
+				7F24F93B17B1CC8E003483FA /* OCMockRecorder.h */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		7F24F93C17B1CC8E003483FA /* OHHTTPStubs */ = {
+			isa = PBXGroup;
+			children = (
+				7F24F93D17B1CC8E003483FA /* OHHTTPStubs.h */,
+				7F24F93E17B1CC8E003483FA /* OHHTTPStubs.m */,
+				7F24F93F17B1CC8E003483FA /* OHHTTPStubsResponse.h */,
+				7F24F94017B1CC8E003483FA /* OHHTTPStubsResponse.m */,
+			);
+			path = OHHTTPStubs;
+			sourceTree = "<group>";
+		};
 		7F907E6316E4A1B9005D06BA = {
 			isa = PBXGroup;
 			children = (
@@ -141,9 +197,9 @@
 		7F907E6E16E4A1B9005D06BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F24F94717B1CFCA003483FA /* UIKit.framework */,
 				7F907E6F16E4A1B9005D06BA /* Foundation.framework */,
 				7F907E8316E4A9AB005D06BA /* SenTestingKit.framework */,
-				7F907E8516E4A9AB005D06BA /* UIKit.framework */,
 				7F907E9D16E59123005D06BA /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
@@ -154,6 +210,8 @@
 			children = (
 				7F907E7416E4A1B9005D06BA /* ISHTTPOperation.h */,
 				7F907E7616E4A1B9005D06BA /* ISHTTPOperation.m */,
+				7F24F93017B1CC73003483FA /* ISHTTPOperationQueue.h */,
+				7F24F93117B1CC73003483FA /* ISHTTPOperationQueue.m */,
 				7F382E1016EC80D0008796E9 /* NSOperationQueue+HTTP.h */,
 				7F382E1116EC80D0008796E9 /* NSOperationQueue+HTTP.m */,
 			);
@@ -163,8 +221,13 @@
 		7F907E8816E4A9AB005D06BA /* ISHTTPOperationTests */ = {
 			isa = PBXGroup;
 			children = (
-				7F907E8E16E4A9AB005D06BA /* ISHTTPOperationTests.h */,
+				7F3BD18417B1BA7A0069912B /* SenTestCase+Async.h */,
+				7F3BD18517B1BA7A0069912B /* SenTestCase+Async.m */,
 				7F907E8F16E4A9AB005D06BA /* ISHTTPOperationTests.m */,
+				7F24F94517B1CD17003483FA /* ISHTTPOperationQueueTests.m */,
+				7F24F94A17B1D41E003483FA /* NSOperationQueueHTTPTests.m */,
+				7F24F93317B1CC8E003483FA /* OCMock */,
+				7F24F93C17B1CC8E003483FA /* OHHTTPStubs */,
 				7F907E8916E4A9AB005D06BA /* Supporting Files */,
 			);
 			path = ISHTTPOperationTests;
@@ -335,6 +398,7 @@
 			files = (
 				7F907E7716E4A1B9005D06BA /* ISHTTPOperation.m in Sources */,
 				7F382E1216EC80D0008796E9 /* NSOperationQueue+HTTP.m in Sources */,
+				7F24F93217B1CC73003483FA /* ISHTTPOperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +409,12 @@
 				7F907E9016E4A9AB005D06BA /* ISHTTPOperationTests.m in Sources */,
 				7F907E9516E4AA5A005D06BA /* ISHTTPOperation.m in Sources */,
 				7F382E1316EC8322008796E9 /* NSOperationQueue+HTTP.m in Sources */,
+				7F3BD18617B1BA7A0069912B /* SenTestCase+Async.m in Sources */,
+				7F24F94217B1CC8E003483FA /* OHHTTPStubs.m in Sources */,
+				7F24F94317B1CC8E003483FA /* OHHTTPStubsResponse.m in Sources */,
+				7F24F94417B1CCEC003483FA /* ISHTTPOperationQueue.m in Sources */,
+				7F24F94617B1CD17003483FA /* ISHTTPOperationQueueTests.m in Sources */,
+				7F24F94B17B1D41E003483FA /* NSOperationQueueHTTPTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,8 +544,17 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISHTTPOperationTests/ISHTTPOperationTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ISHTTPOperationTests/OCMock\"";
 				INFOPLIST_FILE = "ISHTTPOperationTests/ISHTTPOperationTests-Info.plist";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ISHTTPOperationTests/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-force_load",
+					"$(SRCROOT)/ISHTTPOperationTests/OCMock/libOCMock.a",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -490,8 +569,17 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ISHTTPOperationTests/ISHTTPOperationTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/ISHTTPOperationTests/OCMock\"";
 				INFOPLIST_FILE = "ISHTTPOperationTests/ISHTTPOperationTests-Info.plist";
-				OTHER_LDFLAGS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ISHTTPOperationTests/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-force_load",
+					"$(SRCROOT)/ISHTTPOperationTests/OCMock/libOCMock.a",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};

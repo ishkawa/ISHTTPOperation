@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ISHTTPOperationQueue.h"
 #import "NSOperationQueue+HTTP.h"
 
 @interface ISHTTPOperation : NSOperation <NSURLConnectionDataDelegate> {

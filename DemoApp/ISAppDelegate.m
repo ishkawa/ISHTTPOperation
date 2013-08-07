@@ -6,7 +6,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     [queue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
     
     ISViewController *viewController = [[ISViewController alloc] init];
@@ -23,7 +23,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     [queue removeObserver:self forKeyPath:@"operationCount"];
 }
 
@@ -33,7 +33,7 @@
 {
     if ([keyPath isEqualToString:@"operationCount"]) {
         UIApplication *application = [UIApplication sharedApplication];
-        NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+        NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
         application.networkActivityIndicatorVisible = [queue operationCount] ? YES : NO;
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

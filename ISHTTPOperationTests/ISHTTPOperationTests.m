@@ -1,7 +1,19 @@
-#import "ISHTTPOperationTests.h"
 #import "ISHTTPOperation.h"
+#import "SenTestCase+Async.h"
+#import "OHHTTPStubs/OHHTTPStubs.h"
 
-static NSString *const ISTestURL = @"http://date.jsontest.com";
+static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
+
+#import <SenTestingKit/SenTestingKit.h>
+
+@interface ISHTTPOperationTests : SenTestCase {
+    NSURLRequest *request;
+    NSError *connectionError;
+    NSData *responseData;
+    BOOL shouldReturnErrorResponse;
+}
+
+@end
 
 @implementation ISHTTPOperationTests
 
@@ -9,103 +21,117 @@ static NSString *const ISTestURL = @"http://date.jsontest.com";
 {
     [super setUp];
     
-    self.isFinished = NO;
+    NSURL *URL = [NSURL URLWithString:ISHTTPOperationTestsURL];
+    request = [NSURLRequest requestWithURL:URL];
+    responseData = [@"OK" dataUsingEncoding:NSUTF8StringEncoding];
+    connectionError = [NSError errorWithDomain:NSURLErrorDomain
+                                          code:-1003
+                                      userInfo:nil];
+    
+    shouldReturnErrorResponse = NO;
+    
+    [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
+        OHHTTPStubsResponse *response;
+        if (shouldReturnErrorResponse) {
+            response = [OHHTTPStubsResponse responseWithError:connectionError];
+        } else {
+            response = [OHHTTPStubsResponse responseWithData:responseData
+                                                  statusCode:200
+                                                responseTime:0.1
+                                                     headers:nil];
+        }
+        return response;
+    }];
 }
 
 - (void)tearDown
 {
-    do {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (!self.isFinished);
-    
+    [OHHTTPStubs removeAllRequestHandlers];
     [super tearDown];
 }
 
-#pragma mark - tests
+#pragma mark - serial tasks
 
-- (void)testCompletionHandlerIsCalledOnMainThread
+- (void)testNormalConnection
 {
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
+        STAssertEqualObjects(object, responseData, @"response object does not match.");
         STAssertTrue([NSThread isMainThread], nil);
-        self.isFinished = YES;
+        [self stopWaiting];
     }];
+    
+    [self startWaiting];
 }
 
-- (void)testFailureHandlerIsCalledOnMainThread
+- (void)testErrorConnection
 {
-    NSURL *URL = [NSURL URLWithString:@"http://fsdafkjlfasda.org"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    shouldReturnErrorResponse = YES;
+    
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-        STAssertNotNil(error, nil);
+        STAssertEquals(error.code, connectionError.code, @"error code does not match.");
         STAssertTrue([NSThread isMainThread], nil);
-        self.isFinished = YES;
+        [self stopWaiting];
     }];
+    
+    [self startWaiting];
 }
+
+#pragma mark - memory management
 
 - (void)testDeallocOnCancelBeforeStart
 {
-    __weak ISHTTPOperation *woperation;
+    __block __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
-        NSURL *URL = [NSURL URLWithString:ISTestURL];
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation cancel];
-        [NSThread sleepForTimeInterval:.1];
     }
     
-    STAssertNil(woperation, nil);
-    self.isFinished = YES;
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return woperation == nil;
+    }];
 }
 
 - (void)testDeallocOnCancelAfterStart
 {
-    __weak ISHTTPOperation *woperation;
+    __block __weak ISHTTPOperation *woperation;
     
     @autoreleasepool {
-        NSURL *URL = [NSURL URLWithString:ISTestURL];
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
         woperation = operation;
         [operation start];
         [operation cancel];
-        [NSThread sleepForTimeInterval:.1];
     }
     
-    STAssertNil(woperation, nil);
-    self.isFinished = YES;
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return woperation == nil;
+    }];
 }
+
+#pragma mark - control
 
 - (void)testQueueing
 {
     NSUInteger limit = 10;
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
     for (NSInteger i=0; i<limit; i++) {
         [ISHTTPOperation sendRequest:request handler:nil];
     }
     
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     STAssertEquals([queue operationCount], limit, nil);
-    self.isFinished = YES;
 }
 
 - (void)testCancel
 {
-    NSURL *URL = [NSURL URLWithString:ISTestURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [ISHTTPOperation sendRequest:request handler:nil];
     
-    NSOperationQueue *queue = [NSOperationQueue defaultHTTPQueue];
+    NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
     [queue cancelAllOperations];
     
-    [NSThread sleepForTimeInterval:.1];
-    STAssertEquals([queue operationCount], 0U, nil);
-    self.isFinished = YES;
+    [self waitUntilSatisfyingCondition:^BOOL{
+        return [queue operationCount] == 0U;
+    }];
 }
 
 @end

@@ -25,7 +25,7 @@
 
 - (void)stop
 {
-    [[NSOperationQueue defaultHTTPQueue] cancelAllOperations];
+    [[ISHTTPOperationQueue defaultQueue] cancelAllOperations];
 }
 
 - (void)refresh

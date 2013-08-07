@@ -9,5 +9,5 @@ test:
 		GCC_GENERATE_TEST_COVERAGE_FILES=YES
 
 coveralls:
-	coveralls -e ISDiskCacheTests
+	coveralls -e ISHTTPOperationTests
 

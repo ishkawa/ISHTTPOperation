@@ -47,7 +47,7 @@ Add files under `ISHTTPOperation/` to your Xcode project.
 
 If you use CocoaPods, you can install ISHTTPOperation by inserting config below.
 ```
-pod 'ISHTTPOperation', :git => 'https://github.com/ishkawa/ISHTTPOperation.git'
+pod 'ISHTTPOperation', '~> 1.1.0'
 ```
 
 ## Advanced 

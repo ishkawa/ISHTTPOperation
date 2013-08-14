@@ -1,10 +1,11 @@
 #import "ISHTTPOperation.h"
 #import "SenTestCase+Async.h"
 #import "OHHTTPStubs/OHHTTPStubs.h"
+#import <OCMock/OCMock.h>
+#import <SenTestingKit/SenTestingKit.h>
 
 static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
-#import <SenTestingKit/SenTestingKit.h>
 
 @interface ISHTTPOperationTests : SenTestCase {
     NSURLRequest *request;
@@ -51,6 +52,26 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 }
 
 #pragma mark - serial tasks
+
+- (void)testDesignatedInitializer
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
+    id mock = [OCMockObject partialMockForObject:operation];
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+    [[mock expect] initWithRequest:[OCMArg any] handler:[OCMArg any]];
+    [operation init];
+#pragma clang diagnostic pop
+    
+    STAssertNoThrow([mock verify], @"designated initializer was not called.");
+}
+
+- (void)testConcurrencyType
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
+    STAssertTrue(operation.isConcurrent, @"operation is not concurrent.");
+}
 
 - (void)testNormalConnection
 {

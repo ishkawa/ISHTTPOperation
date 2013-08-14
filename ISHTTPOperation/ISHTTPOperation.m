@@ -101,7 +101,6 @@
         if (self.isCancelled) {
             [self completeOperation];
             dispatch_semaphore_signal(self.semaphore);
-            
             return;
         }
         self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];

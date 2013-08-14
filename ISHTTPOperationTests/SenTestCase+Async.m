@@ -36,7 +36,6 @@ static char SenTestCaseWaitingKey;
     
     do {
         @autoreleasepool {
-            NSLog(@"hey");
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
             if ([[NSDate date] timeIntervalSinceDate:startedDate] > timeout) {
                 STFail(@"timed out.");

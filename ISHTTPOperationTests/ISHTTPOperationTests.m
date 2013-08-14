@@ -51,7 +51,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     [super tearDown];
 }
 
-#pragma mark - serial tasks
+#pragma mark - init
 
 - (void)testDesignatedInitializer
 {
@@ -72,6 +72,8 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
     STAssertTrue(operation.isConcurrent, @"operation is not concurrent.");
 }
+
+#pragma mark - serial tasks
 
 - (void)testNormalConnection
 {
@@ -128,6 +130,29 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     [self waitUntilSatisfyingCondition:^BOOL{
         return woperation == nil;
     }];
+}
+
+- (void)testCancelAsynchronously
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
+    dispatch_semaphore_t semaphore = (__bridge dispatch_semaphore_t)[operation performSelector:@selector(semaphore)];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperationWithBlock:^{
+        [operation start];
+    }];
+    
+    [queue addOperationWithBlock:^{
+        [operation cancel];
+    }];
+    
+    dispatch_semaphore_signal(semaphore);
+    
+    [queue waitUntilAllOperationsAreFinished];
+    
+    STAssertTrue([operation isCancelled], @"operation was not cancelled.");
+    STAssertNil([operation performSelector:@selector(connection)], @"operation should not start connection.");
 }
 
 #pragma mark - control

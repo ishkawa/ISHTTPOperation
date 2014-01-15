@@ -1,6 +1,6 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface SenTestCase (Async)
+@interface XCTestCase (Async)
 
 @property (nonatomic, getter = isWaiting) BOOL waiting;
 

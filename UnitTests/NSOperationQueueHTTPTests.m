@@ -1,7 +1,7 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "ISHTTPOperation.h"
 
-@interface NSOperationQueueHTTPTests : SenTestCase
+@interface NSOperationQueueHTTPTests : XCTestCase
 
 @end
 
@@ -11,7 +11,7 @@
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    STAssertEqualObjects([NSOperationQueue defaultHTTPQueue], [ISHTTPOperationQueue defaultQueue], nil);
+    XCTAssertEqualObjects([NSOperationQueue defaultHTTPQueue], [ISHTTPOperationQueue defaultQueue]);
 #pragma clang diagnostic pop
 }
 

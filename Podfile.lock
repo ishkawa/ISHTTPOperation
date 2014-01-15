@@ -1,0 +1,20 @@
+PODS:
+  - ISGcovFlusher (0.0.1)
+  - OCMock (2.2.2)
+  - OHHTTPStubs (3.0.4)
+
+DEPENDENCIES:
+  - ISGcovFlusher (from `https://github.com/ishkawa/ISGcovFlusher.git`)
+  - OCMock (~> 2.2.2)
+  - OHHTTPStubs (~> 3.0.4)
+
+EXTERNAL SOURCES:
+  ISGcovFlusher:
+    :git: https://github.com/ishkawa/ISGcovFlusher.git
+
+SPEC CHECKSUMS:
+  ISGcovFlusher: d874d9742ea4f9f1d05a7968d4250c40315b7ba6
+  OCMock: ffba68873fd32cfd35d885bddad23bfa816da4a3
+  OHHTTPStubs: 711cd3376438340d0c2538f66d6e9c1b3e8c5b7d
+
+COCOAPODS: 0.29.0

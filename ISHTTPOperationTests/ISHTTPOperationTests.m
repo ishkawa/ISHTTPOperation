@@ -1,10 +1,11 @@
 #import "ISHTTPOperation.h"
 #import "SenTestCase+Async.h"
 #import "OHHTTPStubs/OHHTTPStubs.h"
+#import <OCMock/OCMock.h>
+#import <SenTestingKit/SenTestingKit.h>
 
 static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
-#import <SenTestingKit/SenTestingKit.h>
 
 @interface ISHTTPOperationTests : SenTestCase {
     NSURLRequest *request;
@@ -48,6 +49,28 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 {
     [OHHTTPStubs removeAllRequestHandlers];
     [super tearDown];
+}
+
+#pragma mark - init
+
+- (void)testDesignatedInitializer
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
+    id mock = [OCMockObject partialMockForObject:operation];
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+    [[mock expect] initWithRequest:[OCMArg any] handler:[OCMArg any]];
+    [operation init];
+#pragma clang diagnostic pop
+    
+    STAssertNoThrow([mock verify], @"designated initializer was not called.");
+}
+
+- (void)testConcurrencyType
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
+    STAssertTrue(operation.isConcurrent, @"operation is not concurrent.");
 }
 
 #pragma mark - serial tasks
@@ -107,6 +130,29 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     [self waitUntilSatisfyingCondition:^BOOL{
         return woperation == nil;
     }];
+}
+
+- (void)testCancelAsynchronously
+{
+    ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
+    dispatch_semaphore_t semaphore = (__bridge dispatch_semaphore_t)[operation performSelector:@selector(semaphore)];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperationWithBlock:^{
+        [operation start];
+    }];
+    
+    [queue addOperationWithBlock:^{
+        [operation cancel];
+    }];
+    
+    dispatch_semaphore_signal(semaphore);
+    
+    [queue waitUntilAllOperationsAreFinished];
+    
+    STAssertTrue([operation isCancelled], @"operation was not cancelled.");
+    STAssertNil([operation performSelector:@selector(connection)], @"operation should not start connection.");
 }
 
 #pragma mark - control

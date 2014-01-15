@@ -1,3 +1,5 @@
+# ISHTTPOperation [![Build Status](https://travis-ci.org/ishkawa/ISHTTPOperation.png?branch=master)](https://travis-ci.org/ishkawa/ISHTTPOperation) [![Coverage Status](https://coveralls.io/repos/ishkawa/ISHTTPOperation/badge.png?branch=master)](https://coveralls.io/r/ishkawa/ISHTTPOperation?branch=master)
+
 a subclass of NSOperation to wrap asynchronous NSURLConnection.
 
 ## Requirements
@@ -23,7 +25,18 @@ the operations made by `sendRequest:handler:` will be enqueued to `[NSOperationQ
 ### Cancel operations
 
 ```objectivec
-[[NSOperationQueue defaultHTTPQueue] cancelAllOperations];
+[[ISHTTPOperationQueue defaultQueue] cancelAllOperations];
+```
+
+```objectivec
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"request.HTTPMethod MATCHES %@", @"GET"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsUsingPredicate:predicate];
+```
+
+```objectivec
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHTTPMethod:@"GET"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHost:@"example.com"];
+[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithPath:@"/foo"];
 ```
 
 ## Installing
@@ -34,7 +47,7 @@ Add files under `ISHTTPOperation/` to your Xcode project.
 
 If you use CocoaPods, you can install ISHTTPOperation by inserting config below.
 ```
-pod 'ISHTTPOperation', :git => 'https://github.com/ishkawa/ISHTTPOperation.git'
+pod 'ISHTTPOperation', '~> 1.1.1'
 ```
 
 ## Advanced 

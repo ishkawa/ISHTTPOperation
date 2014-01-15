@@ -3,7 +3,7 @@
 
 static char SenTestCaseWaitingKey;
 
-@implementation SenTestCase (Async)
+@implementation XCTestCase (Async)
 
 - (BOOL)isWaiting
 {
@@ -38,7 +38,7 @@ static char SenTestCaseWaitingKey;
         @autoreleasepool {
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
             if ([[NSDate date] timeIntervalSinceDate:startedDate] > timeout) {
-                STFail(@"timed out.");
+                XCTFail(@"timed out.");
                 break;
             }
         }

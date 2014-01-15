@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7F907E8116E4A9AB005D06BA"
-               BuildableName = "ISHTTPOperationTests.octest"
-               BlueprintName = "ISHTTPOperationTests"
+               BlueprintIdentifier = "7FA0D63C1886BC7500BB5C93"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:ISHTTPOperation.xcodeproj">
             </BuildableReference>
          </TestableReference>

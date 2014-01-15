@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>88BD49AA-009E-4174-A6EE-5825062CF0CA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ISHTTPOperation</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8B47D6AA-3872-41F7-914D-5181AFD1242A</key>
+		<string>ssh://github.com/ishkawa/ISHTTPOperation.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ISHTTPOperation.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8B47D6AA-3872-41F7-914D-5181AFD1242A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/ishkawa/ISHTTPOperation.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8B47D6AA-3872-41F7-914D-5181AFD1242A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B47D6AA-3872-41F7-914D-5181AFD1242A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ISHTTPOperation</string>
+		</dict>
+	</array>
+</dict>
+</plist>

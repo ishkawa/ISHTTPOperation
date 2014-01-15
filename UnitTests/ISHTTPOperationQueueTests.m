@@ -1,11 +1,11 @@
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "ISHTTPOperation.h"
 
 static NSString *const ISHTTPOperationTestsURL        = @"http://www.example1.com/1";
 static NSString *const ISHTTPOperationAnotherTestsURL = @"http://www.example2.com/2";
 
-@interface ISHTTPOperationQueueTests : SenTestCase {
+@interface ISHTTPOperationQueueTests : XCTestCase {
     ISHTTPOperationQueue *queue;
     ISHTTPOperation *operation;
     ISHTTPOperation *anotherOperation;
@@ -54,39 +54,39 @@ static NSString *const ISHTTPOperationAnotherTestsURL = @"http://www.example2.co
 
 - (void)testDefaultQueue
 {
-    STAssertEqualObjects([ISHTTPOperationQueue defaultQueue], [ISHTTPOperationQueue defaultQueue], nil);
+    XCTAssertEqualObjects([ISHTTPOperationQueue defaultQueue], [ISHTTPOperationQueue defaultQueue]);
 }
 
 - (void)testCancelOperationsWithHTTPMethod
 {
     [queue cancelOperationsWithHTTPMethod:operation.request.HTTPMethod];
     
-    STAssertNoThrow([mock verify], nil);
-    STAssertThrows([anotherMock verify], nil);
+    XCTAssertNoThrow([mock verify]);
+    XCTAssertThrows([anotherMock verify]);
 }
 
 - (void)testCancelOperationsWithHost
 {
     [queue cancelOperationsWithHost:operation.request.URL.host];
     
-    STAssertNoThrow([mock verify], nil);
-    STAssertThrows([anotherMock verify], nil);
+    XCTAssertNoThrow([mock verify]);
+    XCTAssertThrows([anotherMock verify]);
 }
 
 - (void)testCancelOperationsWithPath
 {
     [queue cancelOperationsWithPath:operation.request.URL.path];
     
-    STAssertNoThrow([mock verify], nil);
-    STAssertThrows([anotherMock verify], nil);
+    XCTAssertNoThrow([mock verify]);
+    XCTAssertThrows([anotherMock verify]);
 }
 
 - (void)testCancelOperationsWithURL
 {
     [queue cancelOperationsWithURL:operation.request.URL];
     
-    STAssertNoThrow([mock verify], nil);
-    STAssertThrows([anotherMock verify], nil);
+    XCTAssertNoThrow([mock verify]);
+    XCTAssertThrows([anotherMock verify]);
 }
 
 @end

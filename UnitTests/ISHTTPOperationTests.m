@@ -2,12 +2,24 @@
 #import "SenTestCase+Async.h"
 #import "OHHTTPStubs/OHHTTPStubs.h"
 #import <OCMock/OCMock.h>
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
+@interface ISHTTPOperation ()
 
-@interface ISHTTPOperationTests : SenTestCase {
+@property (nonatomic, strong) NSURLConnection   *connection;
+@property (nonatomic, strong) NSHTTPURLResponse *response;
+@property (nonatomic, strong) NSMutableData     *data;
+#if OS_OBJECT_USE_OBJC
+@property (nonatomic, strong) dispatch_semaphore_t semaphore;
+#else
+@property (nonatomic, assign) dispatch_semaphore_t semaphore;
+#endif
+
+@end
+
+@interface ISHTTPOperationTests : XCTestCase {
     NSURLRequest *request;
     NSError *connectionError;
     NSData *responseData;
@@ -31,14 +43,15 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     shouldReturnErrorResponse = NO;
     
-    [OHHTTPStubs addRequestHandler:^OHHTTPStubsResponse *(NSURLRequest *request, BOOL onlyCheck) {
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
         OHHTTPStubsResponse *response;
         if (shouldReturnErrorResponse) {
             response = [OHHTTPStubsResponse responseWithError:connectionError];
         } else {
             response = [OHHTTPStubsResponse responseWithData:responseData
                                                   statusCode:200
-                                                responseTime:0.1
                                                      headers:nil];
         }
         return response;
@@ -47,7 +60,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
 - (void)tearDown
 {
-    [OHHTTPStubs removeAllRequestHandlers];
+    [OHHTTPStubs removeAllStubs];
     [super tearDown];
 }
 
@@ -64,13 +77,13 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     [operation init];
 #pragma clang diagnostic pop
     
-    STAssertNoThrow([mock verify], @"designated initializer was not called.");
+    XCTAssertNoThrow([mock verify], @"designated initializer was not called.");
 }
 
 - (void)testConcurrencyType
 {
     ISHTTPOperation *operation = [[ISHTTPOperation alloc] init];
-    STAssertTrue(operation.isConcurrent, @"operation is not concurrent.");
+    XCTAssertTrue(operation.isConcurrent, @"operation is not concurrent.");
 }
 
 #pragma mark - serial tasks
@@ -78,8 +91,8 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 - (void)testNormalConnection
 {
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-        STAssertEqualObjects(object, responseData, @"response object does not match.");
-        STAssertTrue([NSThread isMainThread], nil);
+        XCTAssertEqualObjects(object, responseData, @"response object does not match.");
+        XCTAssertTrue([NSThread isMainThread]);
         [self stopWaiting];
     }];
     
@@ -91,8 +104,8 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     shouldReturnErrorResponse = YES;
     
     [ISHTTPOperation sendRequest:request handler:^(NSHTTPURLResponse *response, id object, NSError *error) {
-        STAssertEquals(error.code, connectionError.code, @"error code does not match.");
-        STAssertTrue([NSThread isMainThread], nil);
+        XCTAssertEqual(error.code, connectionError.code, @"error code does not match.");
+        XCTAssertTrue([NSThread isMainThread]);
         [self stopWaiting];
     }];
     
@@ -135,7 +148,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 - (void)testCancelAsynchronously
 {
     ISHTTPOperation *operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
-    dispatch_semaphore_t semaphore = (__bridge dispatch_semaphore_t)[operation performSelector:@selector(semaphore)];
+    dispatch_semaphore_t semaphore = operation.semaphore;
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -151,8 +164,8 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     [queue waitUntilAllOperationsAreFinished];
     
-    STAssertTrue([operation isCancelled], @"operation was not cancelled.");
-    STAssertNil([operation performSelector:@selector(connection)], @"operation should not start connection.");
+    XCTAssertTrue([operation isCancelled], @"operation was not cancelled.");
+    XCTAssertNil([operation performSelector:@selector(connection)], @"operation should not start connection.");
 }
 
 #pragma mark - control
@@ -165,7 +178,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     }
     
     NSOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
-    STAssertEquals([queue operationCount], limit, nil);
+    XCTAssertEqual([queue operationCount], limit);
 }
 
 - (void)testCancel

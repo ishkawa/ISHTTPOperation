@@ -25,18 +25,19 @@ the operations made by `sendRequest:handler:` will be enqueued to `[NSOperationQ
 ### Cancel operations
 
 ```objectivec
-[[ISHTTPOperationQueue defaultQueue] cancelAllOperations];
+ISHTTPOperationQueue *queue = [ISHTTPOperationQueue defaultQueue];
+[queue cancelAllOperations];
 ```
 
 ```objectivec
 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"request.HTTPMethod MATCHES %@", @"GET"];
-[[ISHTTPOperationQueue defaultQueue] cancelOperationsUsingPredicate:predicate];
+[queue cancelOperationsUsingPredicate:predicate];
 ```
 
 ```objectivec
-[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHTTPMethod:@"GET"];
-[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithHost:@"example.com"];
-[[ISHTTPOperationQueue defaultQueue] cancelOperationsWithPath:@"/foo"];
+[queue cancelOperationsWithHTTPMethod:@"GET"];
+[queue cancelOperationsWithHost:@"example.com"];
+[queue cancelOperationsWithPath:@"/foo"];
 ```
 
 ## Installing
@@ -47,7 +48,7 @@ Add files under `ISHTTPOperation/` to your Xcode project.
 
 If you use CocoaPods, you can install ISHTTPOperation by inserting config below.
 ```
-pod 'ISHTTPOperation', '~> 1.1.1'
+pod 'ISHTTPOperation'
 ```
 
 ## Advanced 

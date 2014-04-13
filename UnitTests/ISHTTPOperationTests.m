@@ -10,7 +10,7 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
 
 @property (nonatomic, strong) NSURLConnection   *connection;
 @property (nonatomic, strong) NSHTTPURLResponse *response;
-@property (nonatomic, strong) NSMutableData     *data;
+@property (nonatomic, strong) NSMutableData     *buffer;
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 #else

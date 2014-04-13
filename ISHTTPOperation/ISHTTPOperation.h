@@ -7,12 +7,12 @@
     BOOL _finished;
 }
 
-@property (nonatomic, strong) NSURLRequest *request;
-@property (nonatomic, copy) void (^handler)(NSHTTPURLResponse *response, id object, NSError *error);
+@property (nonatomic, readonly) NSURLRequest *request;
+@property (nonatomic, readonly) NSHTTPURLResponse *response;
+@property (nonatomic, readonly) NSData *receivedData;
+@property (nonatomic, readonly) void (^handler)(NSHTTPURLResponse *response, id object, NSError *error);
 
-+ (void)sendRequest:(NSURLRequest *)request
-            handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
-
++ (void)sendRequest:(NSURLRequest *)request handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;
 + (void)sendRequest:(NSURLRequest *)request
               queue:(NSOperationQueue *)queue
             handler:(void (^)(NSHTTPURLResponse *response, id object, NSError *error))handler;

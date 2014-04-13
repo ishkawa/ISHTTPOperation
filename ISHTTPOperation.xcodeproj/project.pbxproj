@@ -297,7 +297,7 @@
 		7F907E6416E4A1B9005D06BA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Yosuke Ishikawa";
 				TargetAttributes = {
 					7FA0D63C1886BC7500BB5C93 = {
@@ -564,7 +564,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB94C60D5CF04D1386244964 /* Pods-UnitTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -597,7 +596,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB94C60D5CF04D1386244964 /* Pods-UnitTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;

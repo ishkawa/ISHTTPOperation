@@ -2,15 +2,13 @@
 
 @interface ISHTTPOperation ()
 
-@property (nonatomic, strong) NSURLConnection   *connection;
-@property (nonatomic, strong) NSHTTPURLResponse *response;
-@property (nonatomic, strong) NSMutableData     *data;
+@property (nonatomic, readonly) NSURLConnection *connection;
+@property (nonatomic, readonly) NSMutableData *buffer;
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 #else
 @property (nonatomic, assign) dispatch_semaphore_t semaphore;
 #endif
-
 
 @end
 
@@ -42,9 +40,9 @@
 {
     self = [super init];
     if (self) {
-        self.request = request;
-        self.handler = handler;
-        self.semaphore = dispatch_semaphore_create(1);
+        _request = request;
+        _handler = handler;
+        _semaphore = dispatch_semaphore_create(1);
         
         _finished = NO;
         _executing = NO;
@@ -59,7 +57,7 @@
 #endif
 }
 
-#pragma mark - KVO
+#pragma mark - accessor
 
 - (BOOL)isExecuting
 {
@@ -74,6 +72,11 @@
 - (BOOL)isConcurrent
 {
     return YES;
+}
+
+- (NSData *)receivedData
+{
+    return [self.buffer copy];
 }
 
 #pragma mark -
@@ -103,7 +106,7 @@
             dispatch_semaphore_signal(self.semaphore);
             return;
         }
-        self.connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
+        _connection = [NSURLConnection connectionWithRequest:self.request delegate:self];
         dispatch_semaphore_signal(self.semaphore);
     }
     
@@ -121,8 +124,8 @@
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     [self.connection cancel];
-    self.connection = nil;
-    self.handler = nil;
+    _connection = nil;
+    _handler = nil;
     dispatch_semaphore_signal(self.semaphore);
     
     [super cancel];
@@ -149,34 +152,34 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    self.response = (NSHTTPURLResponse *)response;
-    self.data = [NSMutableData data];
+    _response = (NSHTTPURLResponse *)response;
+    _buffer = [NSMutableData data];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    [self.data appendData:data];
+    [self.buffer appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    id object = [self processData:self.data];
-    if (self.handler) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    id object = [self processData:self.buffer];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.handler) {
             self.handler(self.response, object, nil);
-        });
-    }
+        }
+    });
     
     [self completeOperation];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (self.handler) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.handler) {
             self.handler(self.response, nil, error);
-        });
-    }
+        }
+    });
     
     [self completeOperation];
 }

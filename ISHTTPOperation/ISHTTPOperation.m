@@ -164,22 +164,22 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     id object = [self processData:self.buffer];
-    if (self.handler) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.handler) {
             self.handler(self.response, object, nil);
-        });
-    }
+        }
+    });
     
     [self completeOperation];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (self.handler) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.handler) {
             self.handler(self.response, nil, error);
-        });
-    }
+        }
+    });
     
     [self completeOperation];
 }

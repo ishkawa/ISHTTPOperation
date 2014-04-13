@@ -23,8 +23,9 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     
     
     NSURL *URL = [NSURL URLWithString:ISHTTPOperationTestsURL];
+    void (^handler)(NSHTTPURLResponse *, id object, NSError *) = ^(NSHTTPURLResponse *response, id object, NSError *error) {};
     request = [NSURLRequest requestWithURL:URL];
-    operation = [[ISHTTPOperation alloc] initWithRequest:request handler:nil];
+    operation = [[ISHTTPOperation alloc] initWithRequest:request handler:handler];
     
     dummyData = [@"OK" dataUsingEncoding:NSUTF8StringEncoding];
     dummyError = [NSError errorWithDomain:NSURLErrorDomain
@@ -166,6 +167,20 @@ static NSString *const ISHTTPOperationTestsURL = @"http://date.jsontest.com";
     [queue waitUntilAllOperationsAreFinished];
     
     XCTAssertTrue([operation isCancelled], @"operation was not cancelled.");
+}
+
+- (void)testCancelAsynchronouslyAfterFinishLoading
+{
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperationWithBlock:^{
+        [operation connectionDidFinishLoading:nil];
+    }];
+    
+    [queue addOperationWithBlock:^{
+        [operation cancel];
+    }];
+    
+    [queue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - control
